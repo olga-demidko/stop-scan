@@ -18,22 +18,22 @@ Start a new scan with parameters
 
 ```yml
 steps:
-    - name: Start Nexploit Scan
-      id: start
-      uses: NeuraLegion/run-scan@v0.2
-      with:
-        api_token: ${{ secrets.NEXPLOIT_TOKEN }}
-        name: GitHub scan ${{ github.sha }}
-        discovery_types: |
-          [ "crawler", "archive" ]
-        crawler_urls: |
-          [ "http://vulnerable-bank.com" ]
-        file_id: LiYknMYSdbSZbqgMaC9Sj
-        hosts_filter: |
-          [ ]
-        wait_for: on_any
-    - name: Get the output scan url
-      run: echo "The scan was started on ${{ steps.start.outputs.url }}"
+- name: Stop Nexploit Scan
+  id: stop
+  uses: NeuraLegion/stop-scan@v1
+  with:
+    api_token: ${{ secrets.NEXPLOIT_TOKEN }}
+    name: GitHub scan ${{ github.sha }}
+    discovery_types: |
+      [ "crawler", "archive" ]
+    crawler_urls: |
+      [ "http://vulnerable-bank.com" ]
+    file_id: LiYknMYSdbSZbqgMaC9Sj
+    hosts_filter: |
+      [ ]
+    wait_for: on_any
+- name: Get the output scan url
+  run: echo "The scan was started on ${{ steps.start.outputs.url }}"
 ```
 
 Restart an existing scan
